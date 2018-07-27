@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import uuid from 'uuid/v1';
 import { connect } from 'react-redux';
 
 class NewPostForm extends Component {
@@ -29,7 +28,7 @@ class NewPostForm extends Component {
 
   render() {
     return (
-      <div>
+      <div id="New-post">
         <form id="Post-form" onSubmit={this.handleSubmit}>
           <label id="Post-label" htmlFor="title">
             Title:

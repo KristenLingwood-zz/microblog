@@ -14,6 +14,9 @@ function rootReducer(state = INITIAL_STATE, action) {
       ]
     };
   }
+  if (action.type === 'DELETE_POST') {
+    return { ...state, posts: state.posts.filter(p => p.id !== action.id) };
+  }
   return { ...state };
 }
 
