@@ -11,6 +11,7 @@ class PostList extends Component {
     const posts = this.props.posts.map(post => (
       <Post
         key={post.id}
+        id={post.id}
         title={post.title}
         body={post.body}
         deleteHandler={() => this.handleDelete(post.id)}

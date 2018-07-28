@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 class TitleList extends Component {
   render() {
-    const titles = this.props.posts.map(p => <li key={p.id}>{p.title}</li>);
+    const titles = this.props.posts.map(p => <div key={p.id}>{p.title}</div>);
     return (
       <div id="Title-list">
         <h2>Titles</h2>

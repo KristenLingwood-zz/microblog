@@ -34,6 +34,7 @@ class NewPostForm extends Component {
             Title:
           </label>
           <input
+            className="form-control"
             type="text"
             id="Post-title"
             name="title"
@@ -45,6 +46,7 @@ class NewPostForm extends Component {
             Body:
           </label>
           <textarea
+            className="form-control"
             name="body"
             value={this.state.body}
             onChange={this.handleChange}
@@ -53,7 +55,9 @@ class NewPostForm extends Component {
             rows="5"
           />
           <br />
-          <button id="Post-button">Publish</button>
+          <button className="btn btn-outline-success" id="Post-button">
+            Publish
+          </button>
         </form>
       </div>
     );
