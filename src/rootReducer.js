@@ -36,13 +36,26 @@ function rootReducer(state = INITIAL_STATE, action) {
     };
   }
   if (action.type === 'ADD_COMMENT') {
-    const newComment = { id: action.id, content: action.content };
+    const newComment = { id: action.id, text: action.text };
     const posts = state.posts.map(p => {
       if (p.id === action.id) {
-        p.comments = [...p.comments, newComment];
+        return (p.comments = [...p.comments, newComment]);
       }
       return p;
     });
+  }
+  if (action.type === 'DELETE_COMMENT') {
+    return {
+      ...state,
+      posts: state.posts.map(p => {
+        if (p.id === action.post_id) {
+          p.comments = p.comments.filter(c => {
+            return c.id !== action.comment_id;
+          });
+        }
+        return p;
+      })
+    };
   }
   return { ...state };
 }

@@ -48,12 +48,32 @@ export function editPost(id, title, body) {
   };
 }
 
-export function fetchComments(post_id) {
+// export function fetchComments(post_id) {
+//   return async function(dispatch) {
+//     const response = await axios.get(
+//       `http://localhost:3000/api/posts/${post_id}/comments`
+//     );
+//     const comments = response.data;
+//     return dispatch({ type: 'FETCH_COMMENTS', post_id, comments });
+//   };
+// }
+
+export function removeComment(post_id, comment_id) {
+  console.log('remove comment action creator', post_id, comment_id);
   return async function(dispatch) {
-    const response = await axios.get(
-      `http://localhost:3000/api/posts/${post_id}/comments`
+    await axios.delete(
+      `http://localhost:3000/api/posts/${post_id}/comments/${comment_id}`
     );
-    const comments = response.data;
-    return dispatch({ type: 'FETCH_COMMENTS', post_id, comments });
+    return dispatch({ type: 'DELETE_COMMENT', post_id, comment_id });
+  };
+}
+
+export function addComment(post_id, text) {
+  return async function(dispatch) {
+    const response = await axios.post(
+      `http://localhost:3000/api/posts/${post_id}/comments`,
+      { text }
+    );
+    return dispatch({ type: 'ADD_COMMENT', post_id, text });
   };
 }

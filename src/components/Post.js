@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './Post.css';
 import Comment from './Comment';
-import { editPost, fetchComments } from '../actionCreators';
+import { editPost, removeComment, addComment } from '../actionCreators';
 
 class Post extends Component {
   state = {
@@ -10,7 +10,7 @@ class Post extends Component {
     title: this.props.title,
     body: this.props.body,
     editing: false,
-    content: ''
+    text: ''
   };
 
   handleChange = evt => {
@@ -23,12 +23,12 @@ class Post extends Component {
 
   handleComment = evt => {
     evt.preventDefault();
-    this.props.dispatch({
-      type: 'ADD_COMMENT',
-      id: this.state.id,
-      content: this.state.content
-    });
-    this.setState({ content: '' });
+    this.props.addComment(this.state.id, this.state.text);
+    this.setState({ text: '' });
+  };
+
+  handleDeleteComment = (id, comment_id) => {
+    this.props.removeComment(id, comment_id);
   };
 
   handleEdit = evt => {
@@ -39,9 +39,16 @@ class Post extends Component {
   };
 
   render() {
-    let comments = this.props.comments.map(c => (
-      <Comment key={c.id} content={c.text} />
-    ));
+    let comments = this.props.comments.map(c => {
+      console.log('comments');
+      return (
+        <Comment
+          key={c.id}
+          text={c.text}
+          deleteComment={() => this.handleDeleteComment(this.state.id, c.id)}
+        />
+      );
+    });
     let post;
     if (!this.state.editing) {
       post = (
@@ -59,8 +66,8 @@ class Post extends Component {
             <input
               type="text"
               onChange={this.handleChange}
-              name="content"
-              value={this.state.content}
+              name="text"
+              value={this.state.text}
             />
             <button>Add Comment</button>
           </form>
@@ -113,5 +120,5 @@ const mapStateToProps = function(state) {
 
 export default connect(
   mapStateToProps,
-  { editPost }
+  { editPost, removeComment, addComment }
 )(Post);
