@@ -1,5 +1,3 @@
-import uuid from 'uuid/v1';
-
 const INITIAL_STATE = {
   posts: []
 };
@@ -16,7 +14,7 @@ function rootReducer(state = INITIAL_STATE, action) {
       ...state,
       posts: [
         ...state.posts,
-        { id: uuid(), title: action.title, body: action.body, comments: [] }
+        { id: action.id, title: action.title, body: action.body, comments: [] }
       ]
     };
   }
@@ -38,7 +36,7 @@ function rootReducer(state = INITIAL_STATE, action) {
     };
   }
   if (action.type === 'ADD_COMMENT') {
-    const newComment = { id: uuid(), content: action.content };
+    const newComment = { id: action.id, content: action.content };
     const posts = state.posts.map(p => {
       if (p.id === action.id) {
         p.comments = [...p.comments, newComment];

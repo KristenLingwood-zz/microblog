@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { addPost } from '../actionCreators';
 
 class NewPostForm extends Component {
   state = {
@@ -17,11 +18,7 @@ class NewPostForm extends Component {
     if (this.state.title.length < 1 || this.state.body.length < 1) {
       alert('Post must have a title and a body');
     } else {
-      this.props.dispatch({
-        type: 'ADD_POST',
-        title: this.state.title,
-        body: this.state.body
-      });
+      this.props.addPost(this.state);
       this.setState({ title: '', body: '' });
     }
   };
@@ -64,4 +61,7 @@ class NewPostForm extends Component {
   }
 }
 
-export default connect()(NewPostForm);
+export default connect(
+  null,
+  { addPost }
+)(NewPostForm);

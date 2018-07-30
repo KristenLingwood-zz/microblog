@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './Post.css';
 import Comment from './Comment';
+import { editPost, fetchComments } from '../actionCreators';
 
 class Post extends Component {
   state = {
@@ -33,20 +34,14 @@ class Post extends Component {
   handleEdit = evt => {
     evt.preventDefault();
 
-    this.props.dispatch({
-      type: 'UPDATE_POST',
-      id: this.state.id,
-      title: this.state.title,
-      body: this.state.body
-    });
+    this.props.editPost(this.state.id, this.state.title, this.state.body);
     this.setState({ ...this.state, editing: !this.state.editing });
   };
 
   render() {
-    // console.log('rendering post');
-    // let comments = this.props.post.comments.map(c => (
-    //   <Comment content={c.content} />
-    // ));
+    let comments = this.props.comments.map(c => (
+      <Comment key={c.id} content={c.text} />
+    ));
     let post;
     if (!this.state.editing) {
       post = (
@@ -69,7 +64,7 @@ class Post extends Component {
             />
             <button>Add Comment</button>
           </form>
-          {/* {comments} */}
+          {comments}
         </div>
       );
     } else {
@@ -116,4 +111,7 @@ const mapStateToProps = function(state) {
   };
 };
 
-export default connect()(Post);
+export default connect(
+  mapStateToProps,
+  { editPost }
+)(Post);
