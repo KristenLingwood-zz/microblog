@@ -4,12 +4,14 @@ import './index.css';
 import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'react-redux';
-import { createStore, compose } from 'redux';
+import { createStore, compose, applyMiddleware } from 'redux';
 import rootReducer from './rootReducer';
+import thunk from 'redux-thunk';
 
 const store = createStore(
   rootReducer,
   compose(
+    applyMiddleware(thunk),
     typeof window === 'object' &&
     typeof window.devToolsExtension !== 'undefined'
       ? window.devToolsExtension()

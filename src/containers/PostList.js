@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import Post from '../components/Post';
 import { connect } from 'react-redux';
+import { fetchPosts } from '../actionCreators';
 
 class PostList extends Component {
   handleDelete = id => {
     this.props.dispatch({ type: 'DELETE_POST', id });
   };
+
+  componentDidMount() {
+    this.props.fetchPosts();
+  }
 
   render() {
     const posts = this.props.posts.map(post => (
@@ -33,4 +38,7 @@ const mapStateToProps = function(state) {
   };
 };
 
-export default connect(mapStateToProps)(PostList);
+export default connect(
+  mapStateToProps,
+  { fetchPosts }
+)(PostList);

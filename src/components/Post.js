@@ -43,10 +43,10 @@ class Post extends Component {
   };
 
   render() {
-    console.log('rendering post');
-    let comments = this.props.post.comments.map(c => (
-      <Comment content={c.content} />
-    ));
+    // console.log('rendering post');
+    // let comments = this.props.post.comments.map(c => (
+    //   <Comment content={c.content} />
+    // ));
     let post;
     if (!this.state.editing) {
       post = (
@@ -69,7 +69,7 @@ class Post extends Component {
             />
             <button>Add Comment</button>
           </form>
-          {comments}
+          {/* {comments} */}
         </div>
       );
     } else {
