@@ -10,7 +10,7 @@ function rootReducer(state = INITIAL_STATE, action) {
       ...state,
       posts: [
         ...state.posts,
-        { id: uuid(), title: action.title, body: action.body }
+        { id: uuid(), title: action.title, body: action.body, comments: [] }
       ]
     };
   }
@@ -30,6 +30,15 @@ function rootReducer(state = INITIAL_STATE, action) {
         return p;
       })
     };
+  }
+  if (action.type === 'ADD_COMMENT') {
+    const newComment = { id: uuid(), content: action.content };
+    const posts = state.posts.map(p => {
+      if (p.id === action.id) {
+        p.comments = [...p.comments, newComment];
+      }
+      return p;
+    });
   }
   return { ...state };
 }

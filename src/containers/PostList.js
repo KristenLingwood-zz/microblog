@@ -14,6 +14,7 @@ class PostList extends Component {
         id={post.id}
         title={post.title}
         body={post.body}
+        post={post}
         deleteHandler={() => this.handleDelete(post.id)}
       />
     ));

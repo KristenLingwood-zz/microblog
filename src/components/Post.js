@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './Post.css';
+import Comment from './Comment';
 
 class Post extends Component {
   state = {
     id: this.props.id,
     title: this.props.title,
     body: this.props.body,
-    editing: false
+    editing: false,
+    content: ''
   };
 
   handleChange = evt => {
@@ -18,7 +20,17 @@ class Post extends Component {
     this.setState({ ...this.state, editing: !this.state.editing });
   };
 
-  handleEdit = (evt, id, title, body) => {
+  handleComment = evt => {
+    evt.preventDefault();
+    this.props.dispatch({
+      type: 'ADD_COMMENT',
+      id: this.state.id,
+      content: this.state.content
+    });
+    this.setState({ content: '' });
+  };
+
+  handleEdit = evt => {
     evt.preventDefault();
 
     this.props.dispatch({
@@ -31,6 +43,10 @@ class Post extends Component {
   };
 
   render() {
+    console.log('rendering post');
+    let comments = this.props.post.comments.map(c => (
+      <Comment content={c.content} />
+    ));
     let post;
     if (!this.state.editing) {
       post = (
@@ -44,6 +60,16 @@ class Post extends Component {
           >
             Delete
           </button>
+          <form onSubmit={this.handleComment}>
+            <input
+              type="text"
+              onChange={this.handleChange}
+              name="content"
+              value={this.state.content}
+            />
+            <button>Add Comment</button>
+          </form>
+          {comments}
         </div>
       );
     } else {
@@ -83,5 +109,11 @@ class Post extends Component {
     return <div>{post}</div>;
   }
 }
+
+const mapStateToProps = function(state) {
+  return {
+    posts: state.posts
+  };
+};
 
 export default connect()(Post);
